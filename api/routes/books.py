@@ -68,8 +68,9 @@ async def delete_book(book_id: int) -> None:
 
 
 @router.get("/{book_id}", response_model=Book, status_code=status.HTTP_200_OK)
-async def get_book(book_id: int):
+async def get_book(book_id: int) -> Book:
     book = db.get_book(book_id)
     if not book:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="book not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Book not found")
     return book
+
