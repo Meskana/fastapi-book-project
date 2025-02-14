@@ -6,6 +6,7 @@ on:
 
 jobs:
   deploy:
+    name: deploy application
     runs-on: ubuntu-latest
     steps:
       - name: Deploy via SSH
@@ -17,7 +18,11 @@ jobs:
           script: |
             cd /home/ubuntu/fastapi-app
             git pull origin main
+            python3 -m venv venv
             source venv/bin/activate
+            pip install --upgrade pip
             pip install -r requirements.txt
+            sudo systemctl daemon-reload
             sudo systemctl restart fastapi
             sudo systemctl restart nginx
+            EOF
